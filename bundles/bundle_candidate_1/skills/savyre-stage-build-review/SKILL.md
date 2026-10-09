@@ -1,0 +1,63 @@
+---
+name: savyre-stage-build-review
+description: "Implement an approved task backlog and reconcile/review actual changes in Savyre S04, or inspect a changes-only preview. Use for authorized source/test corrections and independent code review; not bypassing plan approval, inventing run passes or performing merge/deployment."
+---
+
+# S04 — Build & Review
+
+## Boundary and inputs
+Read `references/runtime-boundary.md` before managed or preview work. This package is a primary stage skill; compatible internal reusable roles assist it but do not replace its owner. In managed mode, check the verified active stage matches S04; mismatched/legacy context needs runtime mapping, not silent bypass.
+
+- Approved S03 backlog/final, current source and action-level permission context
+- Actual task/status/diff records and authorized project validation tools
+
+## Reusable skill invocation
+Read `references/invocation-map.md` before selecting a dedicated/shared pass. S01 uses savyre-requirement-challenge after analyzed draft; S02 uses savyre-evidence-grounding after discovery before impact. Cross-stage consumers run only when their runtime records/checkpoint are present. Managed invocation requires registered compatible package and delegated pass; missing assignment/availability is a diagnostic or explicit runtime fallback, not proof a call ran. The primary remains the stage owner; do not call savyre-run-stage recursively.
+
+## TDD per backlog item (required unless exempt)
+
+For each selected item with `tddApplicability: required` (default for checkable behavior):
+
+1. Confirm dependencies, approved contract/backlog versions, and the intended check.
+2. **RED:** Write/update the failing test expressing the intended behavior **before** changing production code for that behavior. Run it and record an observed failure attributable to the missing/incorrect behavior (expected vs actual). Runner crashes, missing dependencies, and unrelated syntax errors are **not** valid RED.
+3. **GREEN:** Implement the smallest appropriate production change; rerun; record passing result. Do not obtain GREEN by weakening assertions, deleting required checks, or silently changing approved expectations.
+4. Refactor if needed; rerun affected checks. Preserve earlier run history in `tasks/<id>/` metadata (ordered red/green refs, test paths, AC/check IDs).
+5. A first run that already passes does **not** establish TDD — investigate existing behavior or insufficient test; obtain an explicit exemption where appropriate.
+6. Chat claims of “done” are insufficient; item completion needs disk evidence. Green tests never unlock a stage.
+
+Exempt items: follow the approved alternative verification plan; still do not invent lock while other backlog ids remain.
+
+## Test-author role
+
+When the selected backlog item is an authorized test gap or a required AC check, `savyre-test-author` **defaults to Playwright** (JS/TS `npx playwright test`, or Playwright Python/Java/C# when that language is already present). Scaffold Playwright if the repo has no runner. Do not default AC checks to `node --test`. When Playwright MCP tools are already connected, snapshot the page before the spec. That is not an extra tool install. Snapshots are not RED/GREEN. If those tools are not connected, write the spec anyway. It must not run while S05 is the active stage. The role proposes nothing on its own: the item id has to already be authorized.
+
+## UI/UX quality role
+
+When the authorized item or actual changes affect user-facing UI/UX (screens, navigation, validation feedback, accessibility, or an explicit UI/mockup request), explicitly invoke `savyre-ui-ux-quality` with `mode=build` **before backend wiring**: lightweight static UI preview first, stop for human design approval (`designCheckpoint`), then implement/TDD, then a distinct `mode=review` pass against the current source/preview binding. Review must attach Playwright MCP or authorized preview evidence to `CHK-BROWSER-PREVIEW`; AC RED/GREEN alone does not satisfy it. Backend-only work may skip with recorded `not_applicable`. This role does not replace S04 ownership, approve the stage, or clear Validate. Missing required browser verification is `unable_to_verify`, never `passed`.
+
+## Procedure
+
+1. Require approved task scope and an allowed write action before edits. Work **one** independently executable approved S03 backlog item this turn — the id in JSON `nextBacklogItemId` / `userMessage` when present. Do not implement later backlog ids in the same turn. Respect dependencies and action scope; test creation/corrections from S05 are linked authorized implementation items. Do not expand suite/features without approval. Prefer stating the item id and “writing failing test first” when TDD is required. After that item's tests + source + `change_report.md` for **that id only**, run `turn`, then speak `userMessage` exactly. If `userMessage` / JSON still has a `nextBacklogItemId`, the next action is implement that id — **never** say lock Build & Review while backlog items remain. Only when `userMessage` asks to check the report and lock (no next id) may you direct `/savyre-next` to lock.
+2. Apply actual source and test changes only through permitted tools; preserve existing work. If mode denies source writes/shell, return the limitation or route to supported runtime instead of bypassing restrictions. Code in chat is not applied implementation.
+3. For each independently executed backlog item, use one runtime-owned `tasks/<backlog_item_id>/` record folder; preserve existing item IDs (including FS/NFR/TT/test-item IDs) and explicitly migrate legacy slugged folders. Record item metadata, source/action binding, actual changes, status, red/green evidence and AC refs there. Link each item to its S01 requirement/user-story/criterion refs with artifact-qualified IDs; do not create a second `stories/` or `requirements/` evidence tree, copy application source into the item folder or create folders for unexecuted S01 stories alone. Reconcile planned items with actual changed/untracked/added/deleted paths, done-check evidence and deviations. Separate applied/partial/blocked/verified. Run project checks only through an allowed runtime action; no optional tool installations.
+4. Review current changes in a distinct read-only pass, optionally using a compatible assigned reviewer. Produce precise trigger/consequence/evidence/location findings, merge duplicates and allow zero findings. Declare self-review limits when no independent reviewer; never present it as independent.
+5. Proposed fixes need permitted implementation/rework action; material deviation reopens S03/S01. Invalidate impacted source/review/run bindings through runtime.
+
+## Production-level quality
+Implement **only** approved backlog/AC. Match repo conventions; avoid unnecessary deps. Cover real-user paths (validation, authz, errors, empty/loading states) — not happy-path-only demos. **UI:** reuse existing theme when present; otherwise apply default polished UI bar / user reference. Do not browse the web to clone competitor UIs.
+
+## Output contract
+Produce a concise response with outcome, material question/blocker if any and the verified next action. Detailed content belongs in the assigned draft `change_report.md` or returned preview content when no writer is delegated.
+
+Draft sections: **Actual Changes and Task Status; Plan Reconciliation; Validation Observed; Independent/Self Review Scope; Findings; Deviations and Blockers; Evidence and Next Action**. Omit irrelevant optional detail rather than fill generic sections with invented facts. Structured supporting artifacts: **implementation_status.json/md; code_review.md; code_review_findings.json; tasks/<backlog_item_id>/task_summary.md/task_metadata.json**. Command logs and detailed run evidence stay in runtime-owned run records; item metadata references them. Stage-level files aggregate item states from the same revisions.
+
+**Required before lock:** Write `stages/s04_build_review/code_review.md` with **Independent/Self Review Scope** and **Findings** (IDs/severity when known). Do not leave the stub ("Self-review. No independent reviewer. Findings: none.") as the only content when the change report has review material. Runtime may project a review from `change_report.md` on lock if the file is still a stub; prefer writing the real review yourself.
+
+Required supporting content: Actual task state/source/action evidence; readable status derived from same JSON revision; findings ID/severity/current location/trigger/consequence/check/resolution refs. Source files remain deliverable; change report is derived, not a new ai-output.md implementation authority.
+
+Confirmation boundary: No approval per edit; existing authorization applies. Reapprove material deviations; reviewer cannot self-accept or authorize its proposed fixes.
+
+Final handoff: Runtime final.md records reviewed implementation outcome/source/evidence; applied changes are not verified completion. S05 receives current source/review/task records.
+
+## Completion check
+Before submission check traceability to supplied/observed facts, unresolved questions, current bindings, action permissions and declared writer. Leave missing/unavailable/stale states explicit. Never edit developer_review.md responses, runtime approval metadata or final.md to manufacture completion.

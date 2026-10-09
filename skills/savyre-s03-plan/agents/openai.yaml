@@ -1,0 +1,9 @@
+interface:
+  display_name: "S03 Plan"
+  short_description: "Write the implementation backlog"
+  default_prompt: "Continue the Savyre implementation plan."
+policy:
+  products:
+    - CODEX
+    - CHAT
+  allow_implicit_invocation: true

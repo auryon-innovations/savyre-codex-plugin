@@ -1,0 +1,9 @@
+interface:
+  display_name: "S07 Handoff"
+  short_description: "Summarize the finished work"
+  default_prompt: "Write the Savyre handoff summary."
+policy:
+  products:
+    - CODEX
+    - CHAT
+  allow_implicit_invocation: true

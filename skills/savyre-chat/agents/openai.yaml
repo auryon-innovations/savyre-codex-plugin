@@ -1,0 +1,9 @@
+interface:
+  display_name: "Savyre Chat"
+  short_description: "Continue the current Savyre stage"
+  default_prompt: "Continue the current Savyre stage."
+policy:
+  products:
+    - CODEX
+    - CHAT
+  allow_implicit_invocation: true

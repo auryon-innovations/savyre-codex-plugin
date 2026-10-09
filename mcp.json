@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "savyre": {
+      "command": "node",
+      "args": ["scripts/savyre-mcp.mjs"],
+      "env": {
+        "SAVYRE_WORKSPACE": ""
+      }
+    }
+  }
+}

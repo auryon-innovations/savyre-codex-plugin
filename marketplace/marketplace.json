@@ -1,0 +1,21 @@
+{
+  "name": "savyre-codex-marketplace",
+  "interface": {
+    "displayName": "Savyre Codex"
+  },
+  "plugins": [
+    {
+      "name": "savyre-codex",
+      "source": {
+        "source": "local",
+        "path": "./plugins/savyre-codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ],
+  "_comment": "Template only. install-personal.mjs writes the real file to ~/.agents/plugins/marketplace.json"
+}

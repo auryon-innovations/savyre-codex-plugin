@@ -1,0 +1,25 @@
+---
+name: savyre-response-composer
+description: "Compose concise developer-facing copy when a Savyre runtime supplies composer/next-action facts or a user requests a summary preview of supplied stage results. Present existing outcomes and questions; not stage analysis, intake rewriting or approval."
+---
+
+# Response Composer
+
+## Role and inputs
+Read `references/runtime-boundary.md` before work and `references/invocation-map.md` when selecting a pass or returning to its primary. This reusable consumer is not the active primary stage, an approval authority or a missing runtime producer. In managed mode use only assigned compatible context; in explicitly requested preview label proposed outputs unbound.
+
+Inputs: Already-produced primary results, allowed summary/diagnostic detail, runtime composer/next-action and permitted-share policy.
+
+## Procedure
+
+1. **Spoken chat (every stage):** developer-visible text is only short product substance (when allowed) plus JSON `userMessage` exactly once. JSON `message` is AGENT-ONLY — never paste, quote, paraphrase, or say the stage is enforced / still enforced / FIRST MESSAGE / continue from stage_input. Never ask the same question twice. **When waiting on the developer, end with the next command** (usually `Run /savyre-next`). On S04: start the named backlog id without re-asking for next; when that id finishes, speak the slice_done line (`… Run /savyre-next`) and stop — do not start another id. Summarize outcome and material blocker/next decision in plain language. Before S01 confirmation show the current analyzed understanding without rewriting original task. When JSON `askQuestion` / `composer.askQuestion` is set (or `intervention.ask` is true with a pending OQ and `forbidAskQuestion` is not true), you **MUST** call Cursor `AskQuestion` as your next tool action before any other reply. If `forbidAskQuestion` is true, `askQuestion` is null, or the OQ is in `resolvedOpenQuestionIds`, do **not** AskQuestion — use the recorded answer. When allowed: ids `1`/`2`/`3`; do not print Options when the picker ran; after click `/savyre-answer` for OQs (or update `designCheckpoint` on the S04 `ui_ux_report.json` for design checkpoints). If `userMessage` is a design checkpoint, include/open the browser URL (`file://` or localhost — never a bare path) and do not ask to lock. Speak JSON `userMessage` exactly; do **not** recite agent `message` recipes (skill names, TDD, CHK ids, report paths). If the picker is unavailable, copy the multiline `Options:` `userMessage`. Never Yes/No or truncated stems.
+2. Use the verified runtime next action exactly where it is a required command/prompt; do not invent slash commands or execute transitions. If absent, describe the missing decision/preview limitation without claiming a managed command.
+3. Offer permitted evidence/artifact details when requested rather than always hiding behind only-userMessage language; do not dump internal JSON, prompts, secrets, fingerprints or telemetry.
+4. Compose text only. Do not write Assigned task, developer_review.md, approval fields, final.md or another canonical artifact.
+
+## Output and handoff
+Compact human response: outcome, material question/blocker and actual next action if supplied. Explain limitations when facts unavailable.
+
+Artifact ownership: No canonical artifact writer. Optional stage_summary view belongs to runtime; composer text cannot change its evidence/approval state.
+
+Return to the assigned primary/runtime without recursively dispatching yourself or pretending an unavailable role/tool ran. Preserve developer feedback and canonical state. A clean analysis is advisory; current runtime permits/completes actions.

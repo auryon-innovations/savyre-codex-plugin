@@ -1,0 +1,38 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "savyre-codex",
+  "version": "1.0.0",
+  "description": "Seven-stage software workflow for Codex. Guides task definition, discovery, planning, implementation, tests, readiness, and handoff inside the open project.",
+  "author": {
+    "name": "Savyre"
+  },
+  "keywords": ["savyre", "workflow", "stages", "codex", "skills"],
+  "skills": "./skills/",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Savyre",
+        "shortDescription": "Seven-stage build workflow",
+        "longDescription": "Savyre guides a software change through seven stages in Codex: task definition, code discovery, an implementation plan, build and review, test and resolve, delivery readiness, and handoff. It writes stage notes into a stages folder in the project you have open, and you confirm each stage in chat. It does not install an editor panel, lock files, or deploy the app. Use it in Codex CLI or ChatGPT desktop Codex.",
+        "developerName": "Savyre",
+        "category": "Developer Tools",
+        "capabilities": [
+          "Define the task",
+          "Discover related code",
+          "Plan the build",
+          "Implement one item",
+          "Check acceptance"
+        ],
+        "defaultPrompt": [
+          "Start Savyre and capture this task.",
+          "Continue the current Savyre stage.",
+          "Show which Savyre stage we are on."
+        ],
+        "brandColor": "#0F172A",
+        "brandColorDark": "#38BDF8",
+        "composerIcon": "./assets/icon.svg",
+        "logo": "./assets/logo.svg"
+      }
+    }
+  }
+}
