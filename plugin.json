@@ -23,6 +23,10 @@
           "Implement one item",
           "Check acceptance"
         ],
+        "websiteURL": "https://savyre.com/",
+        "supportURL": "https://savyre.com/contacts",
+        "privacyPolicyURL": "https://savyre.com/privacy-policy",
+        "termsOfServiceURL": "https://savyre.com/terms-conditions",
         "defaultPrompt": [
           "Start Savyre and capture this task.",
           "Continue the current Savyre stage.",
